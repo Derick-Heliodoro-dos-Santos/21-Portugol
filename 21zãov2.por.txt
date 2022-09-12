@@ -1,0 +1,83 @@
+programa //21zão do Dérickão
+{
+	//Biblioteca para a geração de números aleatórios
+	inclua biblioteca Util --> util
+	funcao inicio ()
+	{
+		//Variáveis player, mesa, player total, mesa total
+		inteiro p,m,pt,mt
+		//Variáveis player texto, mesa texto, decisão de compra e loop para uma nova partida
+		cadeia ptxt,mtxt,dec, loop
+		//Setup para o loop de nova partida
+		loop="s"
+		//Loop de nova partida
+		enquanto(loop=="s" ou loop=="S" ou loop=="Sim" ou loop=="sim"){
+			//Setup strings
+			ptxt=""
+			mtxt=""
+			dec="s"
+			//Setup nums
+			pt=0
+			mt=0
+			//Geração de números aleatórios 
+			p=util.sorteia(1,10)
+			m=util.sorteia(1,10)
+			//Variáveis de texto iguais a elas mesmas mais a variável player ou mesa, para guardar todos os números gerados 
+			ptxt=ptxt+p
+			mtxt=mtxt+m
+			//Cálculo do total das mãos
+			pt=pt+p
+			mt=mt+m
+			//Loop enquanto o jogador quiser comprar
+			enquanto(dec=="s" ou dec=="S"){
+				limpa()
+				escreva("\t\t\t\t====================\n\t\t\t\t| 21zão do Dérickão|\n\t\t\t\t====================\n\n")
+				//Geração de número aleatório para o jogador
+				p=util.sorteia(1,10)
+				//Guardar o valor em uma string para mostrar ao jogador depois
+				ptxt=ptxt+("; ")+p
+				//Cálculo do total da mão do jogador
+				pt=pt+p
+				//Se a mão da mesa for menor que 17 ou se o jogador estiver ganhando, comprar uma
+				se(m!=0 e mt<17 ou m!=0 e pt>=mt e mt<21){
+					//Geração de número aleatório para a mesa
+					m=util.sorteia(1,10)
+					//Guardar o valor em uma string para mostrar ao jogador depois
+					mtxt=mtxt+("; ")+m
+					//Cálculo do total da mão da mesa
+					mt=mt+m
+				}
+				//Se falso, a mesa para de comprar
+				senao
+					m=0
+				//Revelação de ambas as mãos para o jogador decidir se irá comprar
+				escreva("Mão do jogador: ",pt," (",ptxt,")\nMão da mesa: ",mt," (",mtxt,")\n\nDeseja comprar?\n")
+				leia(dec)
+			}
+			//Se o jogador decidir não comprar e a mesa não tiver parado, a mesa continua comprando até estourar ou ganhar
+			enquanto(m!=0 e mt<=pt e mt<21 e pt<=21){
+				m=util.sorteia(1,10)
+				mtxt=mtxt+("; ")+m
+				mt=mt+m
+			}
+			limpa()
+			//Revelação de ambas as mãos para mostrar o resultado
+			escreva("Mão do jogador: ",pt," (",ptxt,")\nMão da mesa: ",mt," (",mtxt,")\n\n")
+			//Possíveis resultados
+			se(pt==mt)
+				escreva("\t\t\t\t\t==========\n\t\t\t\t\t| Empate!|\n\t\t\t\t\t==========")
+			senao
+			se(pt>mt e pt<21 ou mt>21 e pt<=21)
+				escreva("\t\t\t\t\t===============\n\t\t\t\t\t| Você ganhou!|\n\t\t\t\t\t===============")
+			senao
+				escreva("\t\t\t\t\t===============\n\t\t\t\t\t| Você perdeu!|\n\t\t\t\t\t===============")
+			//Nova partida?
+			escreva("\n\nDeseja jogar uma nova partida?")
+			leia(loop)
+		}
+		//Fim de jogo 
+		limpa()
+		escreva("\t\t\t======================\n\t\t\t| Obrigado por jogar!|\n\t\t\t======================")
+		escreva("\n\n\nCriado por: Dérick Heliodoro dos Santos\nData de criação: 12/09/2022")
+	}
+}
